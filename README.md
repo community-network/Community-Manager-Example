@@ -1,4 +1,4 @@
-# Community Manager -- Example from BoB
+# Community Manager
 a example of a community manager bot
 made for python3.6 or higher
 
