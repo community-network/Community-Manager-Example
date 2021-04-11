@@ -3,6 +3,7 @@ import discord
 from discord import Game
 from discord.ext import commands
 from discord.ext.commands import AutoShardedBot
+from discord_slash import SlashCommand
 import asyncio
 from cogs.api.mongo import Document
 import motor.motor_asyncio
@@ -16,6 +17,7 @@ intents = discord.Intents.default()
 intents.members = True
 #bot = commands.Bot(command_prefix='!')
 bot = AutoShardedBot(command_prefix="!", intents=intents)
+slash = SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True) # Declares slash commands through the client.
 
 # # uncomment after you setup the file within cogs/cogname to use it:
 
