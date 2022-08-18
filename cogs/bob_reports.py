@@ -116,5 +116,5 @@ class Report_System_Bob(commands.Cog):
         except Exception as e:
             print(e)
         
-def setup(bot):
-    bot.add_cog(Report_System_Bob(bot))
+async def setup(bot):
+    await bot.add_cog(Report_System_Bob(bot))

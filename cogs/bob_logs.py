@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 from discord.ext.commands import AutoShardedBot
-from discord.utils import get
 import datetime
 
 # this cog posts messages if a user got banned in the logs channel
@@ -31,5 +30,5 @@ class BoB_Logs(commands.Cog):
         channel = self.bot.get_channel(id=logChannel)
         await channel.send(embed=embed)
 
-def setup(bot):
-    bot.add_cog(BoB_Logs(bot))
+async def setup(bot):
+    await bot.add_cog(BoB_Logs(bot))

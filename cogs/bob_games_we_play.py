@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 from discord.ext.commands import AutoShardedBot
-import asyncio
 from discord.utils import get
 
 # same concept as firestarters:
@@ -114,5 +113,5 @@ class BoB_GamesWePlay(commands.Cog):
         embed = discord.Embed(color=0xe74c3c, description=error)
         await ctx.send(embed=embed)
 
-def setup(bot):
-    bot.add_cog(BoB_GamesWePlay(bot))
+async def setup(bot):
+    await bot.add_cog(BoB_GamesWePlay(bot))

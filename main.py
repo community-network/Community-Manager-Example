@@ -3,10 +3,10 @@ import discord
 from discord import Game
 from discord.ext import commands
 from discord.ext.commands import AutoShardedBot
-from discord_slash import SlashCommand
 import asyncio
 from cogs.api.mongo import Document
 import motor.motor_asyncio
+import healthcheck
 
 # bot token you can get from: https://discord.com/developers/applications/
 TOKEN = ""
@@ -15,32 +15,7 @@ MONGODBCONNECTION = ""
 
 intents = discord.Intents.default()
 intents.members = True
-#bot = commands.Bot(command_prefix='!')
 bot = AutoShardedBot(command_prefix="!", intents=intents)
-slash = SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True) # Declares slash commands through the client.
-
-# # uncomment after you setup the file within cogs/cogname to use it:
-
-# # our report system: https://discord.com/channels/513749917567811586/794188772237377586/794199015025278979
-# bot.load_extension("cogs.bob_reports")
-
-# # creates a welcome message if someone joins and gives the bros army role
-# bot.load_extension("cogs.bob_only")
-
-# # makes temporary voice channels that automaticly get removed when its empty
-# bot.load_extension("cogs.voice")
-
-# # give people a role by clicking a emoji: https://discord.com/channels/513749917567811586/794133368291328010/794675751127220225
-# bot.load_extension("cogs.bob_firestarters")
-
-# # give people a role by clicking a emoji, also allows admins to add emojis: https://discord.com/channels/513749917567811586/795014651402125352/795015094132015144
-# bot.load_extension("cogs.bob_games_we_play")
-
-# # our !suggest command
-# bot.load_extension("cogs.bob_suggestions")
-
-# # logs if someone bans a player to a channel
-# bot.load_extension("cogs.bob_logs")
 
 @bot.event
 async def on_ready():
@@ -76,5 +51,34 @@ async def on_command_error(ctx, error):
         embed = discord.Embed(color=0xe74c3c, description="Your not allowed to use this command")
         await ctx.send(embed=embed)
     raise error
-#run the bot
-bot.run(TOKEN)
+
+
+async def main():
+    async with bot:
+        await healthcheck.start(bot)
+        
+        # # uncomment after you setup the file within cogs/cogname to use it:
+
+        # # our report system: https://discord.com/channels/513749917567811586/794188772237377586/794199015025278979
+        # await bot.load_extension("cogs.bob_reports")
+
+        # # creates a welcome message if someone joins and gives the bros army role
+        # await bot.load_extension("cogs.bob_only")
+
+        # # makes temporary voice channels that automaticly get removed when its empty
+        # await bot.load_extension("cogs.voice")
+
+        # # give people a role by clicking a emoji: https://discord.com/channels/513749917567811586/794133368291328010/794675751127220225
+        # await bot.load_extension("cogs.bob_firestarters")
+
+        # # give people a role by clicking a emoji, also allows admins to add emojis: https://discord.com/channels/513749917567811586/795014651402125352/795015094132015144
+        # await bot.load_extension("cogs.bob_games_we_play")
+
+        # # our !suggest command
+        # await bot.load_extension("cogs.bob_suggestions")
+
+        # # logs if someone bans a player to a channel
+        # await bot.load_extension("cogs.bob_logs")
+        
+        #run the bot
+        await bot.start(TOKEN)

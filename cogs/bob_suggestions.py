@@ -1,8 +1,6 @@
 import discord
 from discord.ext import commands
 from discord.ext.commands import AutoShardedBot
-from discord.utils import get
-import io
 
 # this cog lets user suggest stuff anonymously with !suggest,
 # after they made their suggestion the original message gets deleted and added to the suggest channel with the emoji's within Emojis[]
@@ -18,7 +16,7 @@ Emojis = ["⬆️","⬇️"]
 staff = 0
 # also setup the mongoDB database if you havent already and uncomment the cog from the main python file.
 
-class BoB_Only(commands.Cog):
+class BoB_Suggestions(commands.Cog):
     """origin-api's Battlefield cog"""
     def __init__(self, bot: AutoShardedBot):
         self.bot = bot
@@ -108,5 +106,5 @@ class BoB_Only(commands.Cog):
         embed = discord.Embed(color=0xe74c3c, description="!remove (valid suggestionnumber) (reason)")
         await ctx.send(embed=embed)
 
-def setup(bot):
-    bot.add_cog(BoB_Only(bot))
+async def setup(bot):
+    await bot.add_cog(BoB_Suggestions(bot))

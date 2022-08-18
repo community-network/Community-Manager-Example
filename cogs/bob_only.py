@@ -1,4 +1,3 @@
-import discord
 from discord.ext import commands
 from discord.ext.commands import AutoShardedBot
 from discord.utils import get
@@ -27,5 +26,5 @@ class BoB_Only(commands.Cog):
             role = get(member.guild.roles, id=ROLE)
             await member.add_roles(role)
 
-def setup(bot):
-    bot.add_cog(BoB_Only(bot))
+async def setup(bot):
+    await bot.add_cog(BoB_Only(bot))

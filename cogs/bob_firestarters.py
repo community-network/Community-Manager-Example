@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 from discord.ext.commands import AutoShardedBot
-import asyncio
 from discord.utils import get
 
 # lets people react to a message to give them a role, click again to remove.
@@ -71,5 +70,5 @@ class BoB_Firestarters(commands.Cog):
                     await member.remove_roles(role)
                     break
 
-def setup(bot):
-    bot.add_cog(BoB_Firestarters(bot))
+async def setup(bot):
+    await bot.add_cog(BoB_Firestarters(bot))

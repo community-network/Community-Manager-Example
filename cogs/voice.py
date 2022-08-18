@@ -1,8 +1,7 @@
 import discord
 import asyncio
-from discord.abc import User
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord import app_commands
 from .commands.voice import *
 
 # this cogs lets users create temporary voice channels,
@@ -69,7 +68,7 @@ class voice(commands.Cog):
                     await channel2.edit(name= name, user_limit = limit)
                     await self.bot.voiceChannel.upsert({"_id": id, "voiceID": channelID}) # _id==userID
 
-    @commands.group()
+    @commands.hybrid_group(name="voice")
     async def voice(self, ctx):
         """`!voice help` for a list of voice related commands"""
         pass
@@ -91,72 +90,36 @@ class voice(commands.Cog):
         await unlock(self, ctx)
 
     @voice.command(name="permit", aliases=["allow"])
+    @app_commands.describe(member="Member to add")
     async def voice_permit(self, ctx, member : discord.Member):
         await permit(self, ctx, member)
 
     @voice.command(name="reject", aliases=["deny"])
+    @app_commands.describe(member="Member to block")
     async def voice_reject(self, ctx, member : discord.Member):
         await reject(self, ctx, member)
 
     @voice.command(name="limit")
+    @app_commands.describe(limit="Max amount of users")
     async def voice_limit(self, ctx, limit):
         await channellimit(self, ctx, limit)
                 
     @voice.command(name="name")
+    @app_commands.describe(name="The new name of the channel")
     async def voice_name(self, ctx,*, name):
         await channelname(self, ctx, name)
 
     @voice.command(name="bitrate")
+    @app_commands.describe(bitrate="Bitrate")
     async def voice_bitrate(self, ctx, bitrate:int):
         await bitratechannel(self, ctx, bitrate)
 
     @voice.command(name="help")
     async def voice_help(self, ctx):
         await help(self, ctx)
-
-    @cog_ext.cog_slash(name="voice")
-    async def _voice(self, ctx: SlashContext):
-        """`!voice help` for a list of voice related commands"""
-        pass
-
-    @cog_ext.cog_subcommand(base="voice", name="setup", description="setup the voice functions to this discord")
-    async def _voice_setup(self, ctx: SlashContext):
-        await setup(self, ctx)
         
-    @cog_ext.cog_subcommand(base="voice", name="lock", description="Lock your channel")
-    async def _voice_lock(self, ctx: SlashContext):
-        await lock(self, ctx)
-
-    @cog_ext.cog_subcommand(base="voice", name="unlock", description="Unlock your channel")
-    async def _voice_unlock(self, ctx: SlashContext):
-        await unlock(self, ctx)
-
-    @cog_ext.cog_subcommand(base="voice", name="permit", description="Give users permission to join your channel")
-    async def _voice_permit(self, ctx: SlashContext, member: discord.Member):
-        await permit(self, ctx, member)
-
-    @cog_ext.cog_subcommand(base="voice", name="reject", description="Remove permission to join your channel and remove")
-    async def _voice_reject(self, ctx: SlashContext, member: discord.Member):
-        await reject(self, ctx, member)
-
-    @cog_ext.cog_subcommand(base="voice", name="limit", description="Change your channel limit")
-    async def _voice_limit(self, ctx: SlashContext, limit: int):
-        await channellimit(self, ctx, limit)
-
-    @cog_ext.cog_subcommand(base="voice", name="name", description="Change your channel name")
-    async def _voice_name(self, ctx: SlashContext, name: str):
-        await channelname(self, ctx, name)
-
-    @cog_ext.cog_subcommand(base="voice", name="bitrate", description="Change your channel bitrate")
-    async def _voice_bitrate(self, ctx: SlashContext, bitrate: int):
-        await bitratechannel(self, ctx, bitrate)
-
-    @cog_ext.cog_subcommand(base="voice", name="help", description="The list of commands for the voice functionality")
-    async def _voice_help(self, ctx: SlashContext):
-        await help(self, ctx)
-
-def setup(bot):
-    bot.add_cog(voice(bot))
+async def setup(bot):
+    await bot.add_cog(voice(bot))
 
 
 
