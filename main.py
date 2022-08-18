@@ -79,6 +79,7 @@ async def main():
 
         # # logs if someone bans a player to a channel
         # await bot.load_extension("cogs.bob_logs")
+        await bot.load_extension("cogs.sync")
         
         #run the bot
         await bot.start(TOKEN)
