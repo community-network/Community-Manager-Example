@@ -73,7 +73,7 @@ class voice(commands.Cog):
         """`!voice help` for a list of voice related commands"""
         pass
     
-    @voice.command(name="setup")
+    @voice.command(name="setup", description="setup the voice functions to this discord")
     async def voice_setup(self, ctx):
         await setup(self, ctx)
 
@@ -81,40 +81,40 @@ class voice(commands.Cog):
     async def info_error(self, ctx, error):
         print(error)
 
-    @voice.command(name="lock")
+    @voice.command(name="lock", description="Lock your channel")
     async def voice_lock(self, ctx):
         await lock(self, ctx)
 
-    @voice.command(name="unlock")
+    @voice.command(name="unlock", description="Unlock your channel")
     async def voice_unlock(self, ctx):
         await unlock(self, ctx)
 
-    @voice.command(name="permit", aliases=["allow"])
+    @voice.command(name="permit", aliases=["allow"], description="Give users permission to join your channel")
     @app_commands.describe(member="Member to add")
     async def voice_permit(self, ctx, member : discord.Member):
         await permit(self, ctx, member)
 
-    @voice.command(name="reject", aliases=["deny"])
+    @voice.command(name="reject", aliases=["deny"], description="Remove permission to join your channel and remove")
     @app_commands.describe(member="Member to block")
     async def voice_reject(self, ctx, member : discord.Member):
         await reject(self, ctx, member)
 
-    @voice.command(name="limit")
+    @voice.command(name="limit", description="Change your channel limit")
     @app_commands.describe(limit="Max amount of users")
     async def voice_limit(self, ctx, limit):
         await channellimit(self, ctx, limit)
                 
-    @voice.command(name="name")
+    @voice.command(name="name", description="Change your channel name")
     @app_commands.describe(name="The new name of the channel")
     async def voice_name(self, ctx,*, name):
         await channelname(self, ctx, name)
 
-    @voice.command(name="bitrate")
+    @voice.command(name="bitrate", description="Change your channel bitrate")
     @app_commands.describe(bitrate="Bitrate")
     async def voice_bitrate(self, ctx, bitrate:int):
         await bitratechannel(self, ctx, bitrate)
 
-    @voice.command(name="help")
+    @voice.command(name="help", description="The list of commands for the voice functionality")
     async def voice_help(self, ctx):
         await help(self, ctx)
         
