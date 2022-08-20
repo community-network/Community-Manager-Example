@@ -5,3 +5,4 @@ dnspython~=2.1.0
 tabulate~=0.8.9
 redis~=3.5.3
 aiosqlite~=0.17.0
+discordhealthcheck~=0.0.8
